@@ -4,6 +4,27 @@
 
 Técnicamente es una **app basada en modelo** de Dataverse con una **custom page** (vista privada) y flujos de Power Automate.
 
+![Gestor de credenciales en un vistazo](./docs/capturas/infografia.png)
+
+## 📸 Capturas
+
+> Capturas de un entorno de desarrollo con datos de ejemplo.
+
+| Catálogo por cliente | Credenciales con permisos |
+|---|---|
+| ![Vista Todas las credenciales con cliente, usuario, propietario y fechas](./docs/capturas/catalogo.jpg) | ![Vista Credenciales con permisos con las credenciales accesibles para la persona conectada](./docs/capturas/credenciales-con-permisos.jpg) |
+| Todo el equipo ve qué credenciales existen, sin contraseñas. | Las credenciales sobre las que tienes permiso. |
+
+| Formulario e historial | Vista privada |
+|---|---|
+| ![Formulario de una credencial con nota pública, propietario y registro de consultas](./docs/capturas/formulario-historial.jpg) | ![Vista privada con los campos Contraseña / Secreto y Nota privada](./docs/capturas/vista-privada.jpg) |
+| Datos públicos, propietario y quién la consultó o actualizó. | La contraseña y la nota privada solo se ven aquí, con permiso sobre el registro. |
+
+| Compartir |
+|---|
+| ![Panel Compartir registros de una credencial](./docs/capturas/compartir.jpg) |
+| El propietario o un administrador de sistemas ve con quién está compartida y retira el acceso. |
+
 ## ✨ ¿Qué puedes hacer?
 
 ### Para todo el equipo (rol `Gestión de credenciales - Usuarios`)
@@ -62,7 +83,8 @@ Hoy la vista privada comprueba el permiso **en la app**, pero los flujos confía
 ├── AGENTS.md                 ← instrucciones para agentes de IA
 ├── .env.example              ← plantilla de configuración local (perfil PAC)
 ├── docs/
-│   └── alcance.md            ← especificación funcional y técnica
+│   ├── alcance.md            ← especificación funcional y técnica
+│   └── capturas/             ← capturas e infografía con datos de ejemplo
 ├── .github/workflows/
 │   └── release-solution.yml  ← publica la release con el .zip
 └── solution/                 ← 👤 instalación
