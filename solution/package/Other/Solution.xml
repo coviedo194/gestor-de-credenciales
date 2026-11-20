@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.26104.153" SolutionPackageVersion="9.2" languagecode="3082" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26104.153" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26104.00153">
+  <SolutionManifest>
+    <UniqueName>OVGGestordecontraseas</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="OVIGI Gestor de credenciales" languagecode="3082" />
+    </LocalizedNames>
+    <Descriptions />
+    <Version>1.0.0.9</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>Ovigi</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Ovigi" languagecode="3082" />
+      </LocalizedNames>
+      <Descriptions />
+      <EMailAddress>coviedo194@outlook.com</EMailAddress>
+      <SupportingWebsiteUrl>https://www.linkedin.com/in/coviedo194</SupportingWebsiteUrl>
+      <CustomizationPrefix>ovg</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>88656</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City>Madrid</City>
+          <County xsi:nil="true"></County>
+          <Country>España</Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince>madrid</StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="account" behavior="1" />
+      <RootComponent type="1" schemaName="ovg_credencial" behavior="0" />
+      <RootComponent type="1" schemaName="ovg_logdecredencial" behavior="0" />
+      <RootComponent type="20" id="{33b26059-e603-f011-bae3-7c1e52765082}" behavior="0" />
+      <RootComponent type="20" id="{43d67a38-219d-f011-bbd3-000d3abecdbd}" behavior="0" />
+      <RootComponent type="29" id="{33fb645e-2b9d-f011-bbd3-000d3abecdbd}" behavior="0" />
+      <RootComponent type="29" id="{3ead3b78-489d-f011-bbd3-000d3abecdbd}" behavior="0" />
+      <RootComponent type="29" id="{400627bd-309d-f011-bbd3-000d3abecdbd}" behavior="0" />
+      <RootComponent type="29" id="{44beed3a-559d-f011-bbd3-000d3abecdbd}" behavior="0" />
+      <RootComponent type="29" id="{687aedde-309d-f011-bbd3-000d3abecdbd}" behavior="0" />
+      <RootComponent type="29" id="{a4b4a327-2c9d-f011-bbd3-000d3abecdbd}" behavior="0" />
+      <RootComponent type="300" schemaName="ovg_gestindecredencialvistaprivada_462b9" behavior="0" />
+      <RootComponent type="300" schemaName="ovg_gestiondecredencialesdefaultcommandlibrary_0e569" behavior="0" />
+      <RootComponent type="61" schemaName="ovg_/icons/credencial.svg" behavior="0" />
+      <RootComponent type="61" schemaName="ovg_opencustompagedialogfixsize" behavior="0" />
+      <RootComponent type="62" schemaName="ovg_Gestiondecredenciales" behavior="0" />
+      <RootComponent type="80" schemaName="ovg_Gestiondecredenciales" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="account" displayName="Account" parentSchemaName="" solution="PowerPages_RuntimeCoreDependencies (1.0.2609.1)" />
+        <Dependent type="1" schemaName="account" displayName="Account" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/Images/AppModule_Default_Icon.png" displayName="msdyn_/Images/AppModule_Default_Icon.png" solution="AppModuleWebResources (2.5)" />
+        <Dependent type="80" schemaName="ovg_Gestiondecredenciales" displayName="Gestión de credenciales" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="SettingDefinition" displayName="AppChannel" solution="msdyn_AppFrameworkInfraExtensions (1.0.0.28)" id.uniquename="AppChannel">
+          <package appName="PowerAppsAppFramework Package" version="1.0.0.30">PowerAppsAppFramework_Anchor (1.0.0.30)</package>
+        </Required>
+        <Dependent type="AppSetting" displayName="parentappmoduleid.uniquename=ovg_Gestiondecredenciales,settingdefinitionid.uniquename=AppChannel" id.parentappmoduleid.uniquename="ovg_Gestiondecredenciales" id.settingdefinitionid.uniquename="AppChannel" />
+      </MissingDependency>
+    </MissingDependencies>
+  </SolutionManifest>
+</ImportExportXml>

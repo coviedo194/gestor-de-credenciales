@@ -1,0 +1,32 @@
+<appaction uniquename="ovg__VistaPrivada!5800aa84bf494db09b66a65732034df9!ovg_Gestiondecredenciales!ovg_credencial!0">
+  <appmoduleid>
+    <uniquename>ovg_Gestiondecredenciales</uniquename>
+  </appmoduleid>
+  <buttonlabeltext default="Vista Privada">
+    <label description="Vista Privada" languagecode="3082" />
+  </buttonlabeltext>
+  <context>1</context>
+  <contextentity>
+    <logicalname>ovg_credencial</logicalname>
+  </contextentity>
+  <contextvalue>ovg_credencial</contextvalue>
+  <fonticon>UnlockPricing</fonticon>
+  <hidden>0</hidden>
+  <iscustomizable>1</iscustomizable>
+  <isdisabled>0</isdisabled>
+  <isgrouptitlehidden>0</isgrouptitlehidden>
+  <location>0</location>
+  <name>VistaPrivada!5800aa84bf494db09b66a65732034df9</name>
+  <onclickeventjavascriptfunctionname>openCustom</onclickeventjavascriptfunctionname>
+  <onclickeventjavascriptparameters>[{"type":4},{"type":21,"value":"ovg_gestindecredencialvistaprivada_462b9"},{"type":19,"value":500},{"type":19,"value":400}]</onclickeventjavascriptparameters>
+  <onclickeventjavascriptwebresourceid>
+    <webresourceid>2ce968f7-81c8-f011-8544-7ced8d5c6d3c</webresourceid>
+  </onclickeventjavascriptwebresourceid>
+  <onclickeventtype>2</onclickeventtype>
+  <origin>0</origin>
+  <sequence>100100075.0000000000</sequence>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <type>0</type>
+  <visibilitytype>0</visibilitytype>
+</appaction>

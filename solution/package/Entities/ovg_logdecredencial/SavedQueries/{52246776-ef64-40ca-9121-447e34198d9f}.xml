@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{52246776-ef64-40ca-9121-447e34198d9f}</savedqueryid>
+    <layoutxml>
+      <grid name="ovg_logdecredencials" jump="ovg_titulo" select="1" icon="1" preview="1">
+        <row name="ovg_logdecredencial" id="ovg_logdecredencialid">
+          <cell name="ovg_titulo" width="194" />
+          <cell name="ovg_usuario" width="100" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>2</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ovg_logdecredencial">
+          <attribute name="ovg_logdecredencialid" />
+          <attribute name="ovg_titulo" />
+          <attribute name="createdon" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="ovg_usuario" />
+          <order attribute="createdon" descending="true" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Vista asociada de Log de credencial" languagecode="3082" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

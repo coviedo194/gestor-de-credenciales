@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <WebResourceId>{b9c1268c-0240-41a0-9743-7c5ad9ab5a5b}</WebResourceId>
+  <Name>ovg_/icons/credencial.svg</Name>
+  <DisplayName>Credencial - llave negra</DisplayName>
+  <WebResourceType>11</WebResourceType>
+  <IntroducedVersion>1.0.0.5</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/ovg_iconscredencialsvgB9C1268C-0240-41A0-9743-7C5AD9AB5A5B</FileName>
+</WebResource>

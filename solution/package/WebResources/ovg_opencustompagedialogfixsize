@@ -1,0 +1,30 @@
+function openCustom(itemId,pCustomPage,pWidth,pHeight)
+{
+	let pageInput = {
+		pageType: "custom",
+		name: pCustomPage,
+		recordId: itemId,
+	};
+let heightBarTitle = 53;
+	var navigationOptions = {
+		target: 2,
+		position: 1,
+		width: {
+			value: pWidth,
+			unit: "px"
+		},
+		height: {
+			value: pHeight + heightBarTitle  ,
+			unit: "px"
+		}
+	};
+        Xrm.Navigation.navigateTo(pageInput, navigationOptions)
+         	.then(
+
+         function ()
+         {}).
+         catch (
+
+         function (error)
+         {});
+}

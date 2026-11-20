@@ -1,0 +1,246 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_approvals": {
+        "api": {
+          "name": "shared_approvals"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "ovg_sharedapprovals_2c685"
+        },
+        "runtimeSource": "embedded"
+      },
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "ovg_GC_Dataverse"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "GC_UrlApp (ovg_GC_UrlApp)": {
+          "defaultValue": "https://{TU ID DE ENTORNO}.{crm4 U OTRA REGION}.dynamics.com/main.aspx?appid={APP GUID}",
+          "type": "String",
+          "metadata": {
+            "schemaName": "ovg_GC_UrlApp"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Introduzca su entrada",
+                  "title": "Credencial Guid",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_1": {
+                  "description": "Introduzca su entrada",
+                  "title": "Solicitante Email",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_3": {
+                  "description": "Introduzca su entrada",
+                  "title": "Solicitante Guid",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_3"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "a3f12ceb-8a17-4920-92db-38644807ada6"
+          }
+        }
+      },
+      "actions": {
+        "IniciaAndEsperaAprobacion": {
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "parameters": {
+              "approvalType": "Basic",
+              "WebhookApprovalCreationInput/title": "Solicitud de acceso a credencial - @{outputs('GetCredencialData')?['body/ovg_cliente/name']}",
+              "WebhookApprovalCreationInput/assignedTo": "@outputs('GetCredencialData')?['body/owninguser/internalemailaddress']",
+              "WebhookApprovalCreationInput/details": "Cliente: @{outputs('GetCredencialData')?['body/ovg_cliente/name']}\nUsuario - Client/App id: @{outputs('GetCredencialData')?['body/ovg_usuario']}",
+              "WebhookApprovalCreationInput/itemLink": "@{parameters('GC_UrlApp (ovg_GC_UrlApp)')}&pagetype=entityrecord&etn=ovg_credencial&id=@{triggerBody()?['text']}",
+              "WebhookApprovalCreationInput/requestor": "@triggerBody()?['text_1']",
+              "WebhookApprovalCreationInput/enableNotifications": true,
+              "WebhookApprovalCreationInput/enableReassignment": false
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+              "operationId": "StartAndWaitForAnApproval",
+              "connectionName": "shared_approvals"
+            }
+          },
+          "runAfter": {
+            "GetCredencialData": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f1152b48-339c-4a47-a22d-3c8613137bd7"
+          }
+        },
+        "Condición": {
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@outputs('IniciaAndEsperaAprobacion')?['body/outcome']",
+                  "Approve"
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "CompartirRegistroConUsuario": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "actionName": "GrantAccess",
+                  "item/Target": "ovg_credencials(@{triggerBody()?['text']})",
+                  "item/PrincipalAccess": "@outputs('JsonParaCompartir')"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "PerformUnboundAction",
+                  "connectionName": "shared_commondataserviceforapps"
+                }
+              },
+              "runAfter": {
+                "JsonParaCompartir": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "30e1dca0-5c32-40db-9c32-a4d331291b3e"
+              }
+            },
+            "JsonParaCompartir": {
+              "type": "Compose",
+              "inputs": {
+                "Principal": {
+                  "systemuserid": "@{triggerBody()?['text_3']}",
+                  "@{outputs('At')}odata.type": "Microsoft.Dynamics.CRM.systemuser"
+                },
+                "AccessMask": "ReadAccess,WriteAccess"
+              },
+              "runAfter": {
+                "At": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "0679f129-98fe-45a8-bae3-5aa335de67d8"
+              }
+            },
+            "At": {
+              "type": "Compose",
+              "inputs": "@@",
+              "metadata": {
+                "operationMetadataId": "0679f129-98fe-45a8-bae3-5aa335de67d8"
+              }
+            }
+          },
+          "else": {
+            "actions": {}
+          },
+          "runAfter": {
+            "Redactar": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "2832c934-e100-4b05-85fa-3dfa6af170bd"
+          }
+        },
+        "Redactar": {
+          "type": "Compose",
+          "inputs": "@body('IniciaAndEsperaAprobacion')",
+          "runAfter": {
+            "IniciaAndEsperaAprobacion": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7da4431d-2875-4a39-a5f2-68fca473e3b7"
+          }
+        },
+        "Responder_a_un_flujo_de_aplicación_Power_App": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {}
+          },
+          "runAfter": {
+            "Condición": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "4355193d-ffb9-41b9-99b5-63fe9cdeea96"
+          }
+        },
+        "GetCredencialData": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "ovg_credencials",
+              "recordId": "@triggerBody()?['text']",
+              "$select": "ovg_usuario",
+              "$expand": "owninguser($select=internalemailaddress),ovg_cliente($select=name)"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "f1e44adf-84a2-408a-bc85-5c382efb5eaa"
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

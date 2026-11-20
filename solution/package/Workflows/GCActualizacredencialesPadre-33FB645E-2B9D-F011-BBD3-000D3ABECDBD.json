@@ -1,0 +1,105 @@
+{
+  "properties": {
+    "connectionReferences": {},
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "Contrasenia",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Escribir entrada",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "NotaPrivada",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Escribir entrada",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_2": {
+                  "title": "Credencial Guid",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Escribir entrada",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_3": {
+                  "description": "Introduzca su entrada",
+                  "title": "Solicitante Guid",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "text_3"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "949004e8-cca7-45f0-b243-27e3c4cdfa27"
+          }
+        }
+      },
+      "actions": {
+        "Ejecutar_un_flujo_secundario": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "a4b4a327-2c9d-f011-bbd3-000d3abecdbd"
+            },
+            "body": {
+              "text": "@triggerBody()?['text_2']",
+              "text_1": "@triggerBody()?['text']",
+              "text_2": "@triggerBody()?['text_1']",
+              "text_3": "@triggerBody()?['text_3']"
+            }
+          },
+          "runAfter": {}
+        },
+        "Responder_a_un_flujo_de_aplicación_Power_App": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {}
+            },
+            "statusCode": 200
+          },
+          "runAfter": {
+            "Ejecutar_un_flujo_secundario": [
+              "Succeeded"
+            ]
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

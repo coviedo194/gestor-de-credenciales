@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{c6cd4bbb-f814-4bbe-8f7c-a6c82d665a6a}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form headerdensity="HighWithControls">
+      <tabs>
+        <tab verticallayout="true" id="{d183944b-99df-4c23-a64f-0cb10f564b40}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="3082" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{6a70a478-5155-4d85-b360-961bcd5d6eed}" columns="1">
+                  <labels>
+                    <label description="SecGeneral" languagecode="3082" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{43fa0f53-78dc-4cda-a917-4dc7face11a5}" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Cliente" languagecode="3082" />
+                        </labels>
+                        <control id="ovg_cliente" classid="{270bd3db-d9af-4782-9025-509e298dec0a}" datafieldname="ovg_cliente">
+                          <parameters>
+                            <DefaultViewId>{7BBC8016-B0E6-42E5-9E32-76E81260B623}</DefaultViewId>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5ee7a795-44da-44d5-b9f2-a7c0ad369efc}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Usuario/ Id. de cliente" languagecode="3082" />
+                        </labels>
+                        <control id="ovg_usuario" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="ovg_usuario" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{2638c571-47e6-453c-b825-17ae9549ffb4}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Id de partner vinculado" languagecode="3082" />
+                        </labels>
+                        <control id="ovg_iddepartnervinculado" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="ovg_iddepartnervinculado" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7d7e53ce-dbcc-4f98-88fd-31274d3c72c4}" locklevel="0" colspan="1" rowspan="3">
+                        <labels>
+                          <label description="Nota pública" languagecode="3082" />
+                        </labels>
+                        <control id="ovg_notapublica" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="ovg_notapublica" disabled="false" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="null_section_3" id="f3950992-2afd-4de8-91d2-5e8cbb013952" IsUserDefined="0" locklevel="0" showlabel="false" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115" visible="true">
+                  <labels>
+                    <label description="SecGeneralOculta" languagecode="3082" />
+                  </labels>
+                  <rows>
+                    <row />
+                    <row>
+                      <cell locklevel="0" id="{b02d8606-9e66-4854-9eb4-21bd0c2ecc71}" rowspan="4" colspan="1" auto="false">
+                        <labels>
+                          <label description="Logs" languagecode="3082" />
+                          <label description="Logs de credencial" languagecode="1033" />
+                        </labels>
+                        <control indicationOfSubgrid="true" id="Subgrid_new_1" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                          <parameters>
+                            <RecordsPerPage>4</RecordsPerPage>
+                            <AutoExpand>Fixed</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <EnableChartPicker>true</EnableChartPicker>
+                            <ChartGridMode>All</ChartGridMode>
+                            <RelationshipName>ovg_logdecredencial_credencial_credencial</RelationshipName>
+                            <TargetEntityType>ovg_logdecredencial</TargetEntityType>
+                            <ViewId>{E615A369-BE7E-4FB8-ABC8-F0902F6AFCAC}</ViewId>
+                            <ViewIds>{E615A369-BE7E-4FB8-ABC8-F0902F6AFCAC}</ViewIds>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{70568d31-92b0-4d0d-8207-8d06f6544605}" locklevel="0" colspan="1" rowspan="1" visible="false" showlabel="true">
+                        <labels>
+                          <label description="Título" languagecode="3082" />
+                          <label description="Título" languagecode="1033" />
+                        </labels>
+                        <control id="ovg_titulo" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="ovg_titulo" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{0dada8c6-2533-4345-87ee-8bd807858702}" locklevel="0" colspan="1" rowspan="1" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Razón para el estado" languagecode="3082" />
+                          <label description="Status Reason" languagecode="1033" />
+                        </labels>
+                        <control id="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statuscode" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5f4db793-424b-4fa0-8cb8-bce0b6d0d7e8}" locklevel="0" colspan="1" rowspan="1" visible="false">
+                        <labels>
+                          <label description="Estado" languagecode="3082" />
+                          <label description="Status" languagecode="1033" />
+                        </labels>
+                        <control id="statecode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statecode" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{d3627bac-f5ec-47c3-9f1a-d78c58ed6a97}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{4f84ba23-4fd1-40e1-a9d4-c0922b3445c8}" showlabel="false">
+              <labels>
+                <label description="" languagecode="3082" />
+              </labels>
+            </cell>
+            <cell id="{bf04588a-b6e7-4193-add9-7ad280968eaa}" showlabel="false">
+              <labels>
+                <label description="" languagecode="3082" />
+              </labels>
+            </cell>
+            <cell id="{c4cb90f6-1609-44f0-adee-e9e36d0a8dda}" showlabel="false">
+              <labels>
+                <label description="" languagecode="3082" />
+              </labels>
+            </cell>
+            <cell id="{3ae38cb4-f4bc-44e9-b7bb-d39e2e619eea}" colspan="1" rowspan="1">
+              <labels>
+                <label description="Propietario" languagecode="3082" />
+                <label description="Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{60cd1e23-729b-4b92-a446-cb1e67ff67b8}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{6de7acfd-5566-4ead-b6ef-7bbf44785bf0}" showlabel="false">
+              <labels>
+                <label description="" languagecode="3082" />
+              </labels>
+            </cell>
+            <cell id="{565743ec-c0fc-48ef-b495-b1eb6a9335cd}" showlabel="false">
+              <labels>
+                <label description="" languagecode="3082" />
+              </labels>
+            </cell>
+            <cell id="{f6d31093-f142-4cd3-9665-73561e6a79fe}" showlabel="false">
+              <labels>
+                <label description="" languagecode="3082" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Información" languagecode="3082" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Formulario para esta entidad." languagecode="3082" />
+    </Descriptions>
+  </systemform>
+</forms>

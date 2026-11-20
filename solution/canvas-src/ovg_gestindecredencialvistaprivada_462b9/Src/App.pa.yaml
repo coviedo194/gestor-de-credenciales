@@ -1,0 +1,53 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+App:
+  Properties:
+    Formulas: |-
+      =nfStudioMode = StartsWith(
+          Host.Version,
+          "PowerApps-Studio"
+      );
+      nfColorGrayClaro = RGBA(
+          245,
+          245,
+          245,
+          1
+      );
+      nfColorBorder_Clasicc = ColorFade(
+          nfColorGrayClaro,
+          -30%
+      );
+      nfColorFont_Clasicc = RGBA(
+          48,
+          48,
+          48,
+          100
+      );
+      nfCredencialId = GUID(
+          If(
+              nfStudioMode,
+              "162d450e-9652-f111-bec7-000d3a29c9a8",
+              GUID(
+                  Substitute(
+                      Substitute(
+                          Param("recordId"),
+                          "{",
+                          ""
+                      ),
+                      "}",
+                      ""
+                  )
+              )
+          )
+      );
+      nfSystemUser = LookUp(
+          Usuarios,
+          'Id. de objeto de Azure AD' = User().EntraObjectId
+      );
+    Theme: =PowerAppsTheme

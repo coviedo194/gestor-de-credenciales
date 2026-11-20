@@ -1,0 +1,69 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Pantalla Sin Permiso:
+    Properties:
+      Fill: =nfColorGrayClaro
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: =Set(gblVisibleLoader,false);
+    Children:
+      - ContPadre_Inicio_1:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =App.Theme.Colors.PrimaryForeground
+            Height: =Parent.Height - (Self.Y*2)
+            Width: =480
+            X: =10
+            Y: =10
+          Children:
+            - LblNoTienePermiso:
+                Control: Text@0.0.51
+                Properties:
+                  Align: ='TextCanvas.Align'.Center
+                  Height: '=31  '
+                  Size: =22
+                  Text: ="No tiene permisos para realizar esta acción."
+                  Width: =450
+                  X: =15
+                  Y: =122
+            - BtnSolicitarPermiso:
+                Control: Button@0.0.45
+                Properties:
+                  Height: =38
+                  Icon: ="ServiceBell"
+                  OnSelect: |+
+                    =Set(
+                        gblVisibleLoader,
+                        true
+                    );
+                    '(GC)Solicitarpermiso(Padre)'.Run(
+                        nfCredencialId,
+                        User().Email,
+                        nfSystemUser.Usuario
+                    );
+                    Navigate('Pantalla Permiso Solicitado');
+                    RequestHide();
+
+
+                  Text: ="Solicitar permiso"
+                  Width: =450
+                  X: =15
+                  Y: =327
+      - LblLoader_sinpermiso:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =400
+            Size: =20
+            Text: ="⌛️ espere, por favor"
+            VerticalAlign: =VerticalAlign.Middle
+            Visible: =gblVisibleLoader
+            Width: =500

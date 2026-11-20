@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="ovg_GC_UrlApp">
+  <defaultvalue>https://{TU ID DE ENTORNO}.{crm4 U OTRA REGION}.dynamics.com/main.aspx?appid={APP GUID}</defaultvalue>
+  <displayname default="GC_UrlApp">
+    <label description="GC_UrlApp" languagecode="3082" />
+  </displayname>
+  <introducedversion>1.0.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

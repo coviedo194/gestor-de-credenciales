@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{bb92a3ac-afe0-4c48-9539-2bf4b7ba0e6d}</savedqueryid>
+    <layoutxml>
+      <grid name="ovg_credencials" jump="ovg_titulo" select="1" icon="1" preview="1">
+        <row name="ovg_credencial" id="ovg_credencialid">
+          <cell name="ovg_titulo" width="300" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>2</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ovg_credencial">
+          <attribute name="ovg_credencialid" />
+          <attribute name="ovg_titulo" />
+          <attribute name="createdon" />
+          <order attribute="ovg_titulo" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Vista asociada de Credencial" languagecode="3082" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

@@ -1,0 +1,144 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Pantalla Inicio:
+    Properties:
+      Fill: '=nfColorGrayClaro '
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: |
+        =Set(
+            gblVisibleLoader,
+            true
+        );
+        Set(
+            gblCredencial_SoloLectura,
+            LookUp(
+                Credenciales,
+                Credencial = nfCredencialId
+            )
+        );
+        If(
+            RecordInfo(
+                LookUp(
+                    Credenciales,
+                    Credencial = nfCredencialId
+                ),
+                RecordInfo.EditPermission
+            ),
+            Set(
+                gblCredencial_SuperUser,
+                '(GC)Obtienecredenciales(Padre)'.Run(
+                    nfCredencialId,
+                    nfSystemUser.Usuario
+                )
+            ),
+            If(
+                !nfStudioMode,
+                Select(BtnNavigateSinPermiso)
+            )
+        );
+        Set(
+            gblVisibleLoader,
+            false
+        );
+    Children:
+      - ContPadre_Inicio:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =App.Theme.Colors.PrimaryForeground
+            Height: =Parent.Height - (Self.Y*2)
+            Width: =480
+            X: =10
+            Y: =10
+          Children:
+            - TxtNotaPrivada:
+                Control: TextInput@0.0.54
+                Properties:
+                  Appearance: ='TextInputCanvas.Appearance'.Outline
+                  Height: =139
+                  Mode: ='TextInputCanvas.Mode'.Multiline
+                  Value: =gblCredencial_SuperUser.notaprivada
+                  Width: =450
+                  X: =15
+                  Y: =101
+            - LblNotaPrivada:
+                Control: Text@0.0.51
+                Properties:
+                  Height: '=20  '
+                  Text: =DataSourceInfo(Credenciales,DataSourceInfo.DisplayName,'Nota privada')
+                  Width: =450
+                  X: =15
+                  Y: =81
+            - TxtContrasenia:
+                Control: TextInput@0.0.54
+                Properties:
+                  Appearance: ='TextInputCanvas.Appearance'.Outline
+                  Type: ='TextBox.Mode'.SingleLine
+                  Value: =gblCredencial_SuperUser.contrasenia
+                  Width: =450
+                  X: =15
+                  Y: =35
+            - LblContrasenia:
+                Control: Text@0.0.51
+                Properties:
+                  Height: '=20  '
+                  Text: =DataSourceInfo(Credenciales,DataSourceInfo.DisplayName,'Contraseña / Secreto')
+                  Width: =450
+                  X: =15
+                  Y: =15
+            - BtnGuardar:
+                Control: Button@0.0.45
+                Properties:
+                  DisplayMode: |-
+                    =If(
+                        gblCredencial_SuperUser.contrasenia <> TxtContrasenia.Value || gblCredencial_SuperUser.notaprivada <> TxtNotaPrivada.Value,
+                        DisplayMode.Edit,
+                        DisplayMode.Disabled
+                    )
+                  Height: =38
+                  Icon: ="Save"
+                  OnSelect: |
+                    =Set(
+                        gblVisibleLoader,
+                        true
+                    );
+                    '(GC)Actualizacredenciales(Padre)'.Run(
+                        TxtContrasenia.Value,
+                        TxtNotaPrivada.Value,
+                        nfCredencialId,
+                        nfSystemUser.Usuario
+                    );
+                    RequestHide();
+                    Set(
+                        gblVisibleLoader,
+                        false
+                    );
+                  Text: ="Guardar"
+                  Width: =124
+                  X: =15
+                  Y: =326
+      - BtnNavigateSinPermiso:
+          Control: Button@0.0.45
+          Properties:
+            Height: =0.01
+            OnSelect: =Navigate('Pantalla Sin Permiso')
+            Text: ="BtnNavigateSinPermiso"
+            Width: =0
+      - LblLoader_inicio:
+          Control: Text@0.0.51
+          Properties:
+            Align: ='TextCanvas.Align'.Center
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =400
+            Size: =20
+            Text: ="⌛️ espere, por favor"
+            VerticalAlign: =VerticalAlign.Middle
+            Visible: =gblVisibleLoader
+            Width: =500

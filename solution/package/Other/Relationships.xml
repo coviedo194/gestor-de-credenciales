@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_ovg_credencial" />
+  <EntityRelationship Name="business_unit_ovg_logdecredencial" />
+  <EntityRelationship Name="lk_ovg_credencial_createdby" />
+  <EntityRelationship Name="lk_ovg_credencial_modifiedby" />
+  <EntityRelationship Name="lk_ovg_logdecredencial_createdby" />
+  <EntityRelationship Name="lk_ovg_logdecredencial_modifiedby" />
+  <EntityRelationship Name="ovg_credencial_cliente_account" />
+  <EntityRelationship Name="ovg_logdecredencial_credencial_credencial" />
+  <EntityRelationship Name="ovg_logdecredencial_usuario_systemuser" />
+  <EntityRelationship Name="owner_ovg_credencial" />
+  <EntityRelationship Name="owner_ovg_logdecredencial" />
+  <EntityRelationship Name="team_ovg_credencial" />
+  <EntityRelationship Name="team_ovg_logdecredencial" />
+  <EntityRelationship Name="user_ovg_credencial" />
+  <EntityRelationship Name="user_ovg_logdecredencial" />
+</EntityRelationships>

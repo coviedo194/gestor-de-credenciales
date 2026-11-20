@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{080cbab8-abc8-f011-8544-7ced8d5c6d3c}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ovg_titulo" select="1" icon="1" preview="1">
+        <row name="result" id="ovg_credencialid">
+          <cell name="ovg_cliente" width="300" />
+          <cell name="ovg_usuario" width="252" />
+          <cell name="ownerid" width="155" />
+          <cell name="createdon" width="191" />
+          <cell name="ovg_credencialid" ishidden="1" />
+          <cell name="modifiedon" width="167" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch>
+        <entity name="ovg_credencial">
+          <attribute name="ovg_cliente" />
+          <attribute name="ovg_usuario" />
+          <filter type="or">
+            <filter>
+              <condition entityname="paa" attribute="principalid" operator="eq-userid" />
+              <condition entityname="paa" attribute="accessrightsmask" operator="eq" value="3" />
+            </filter>
+            <condition attribute="ownerid" operator="eq-userid" />
+          </filter>
+          <link-entity name="principalobjectaccess" from="objectid" to="ovg_credencialid" link-type="outer" alias="paa" />
+          <attribute name="ovg_credencialid" />
+          <attribute name="createdon" />
+          <attribute name="ownerid" />
+          <order attribute="ovg_cliente" descending="false" />
+          <attribute name="modifiedon" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Credenciales con permisos" languagecode="3082" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

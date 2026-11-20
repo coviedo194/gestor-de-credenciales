@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModule>
+  <UniqueName>ovg_Gestiondecredenciales</UniqueName>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <WebResourceId>953b9fac-1e5e-e611-80d6-00155ded156f</WebResourceId>
+  <OptimizedFor></OptimizedFor>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <FormFactor>1</FormFactor>
+  <ClientType>4</ClientType>
+  <NavigationType>0</NavigationType>
+  <AppModuleComponents>
+    <AppModuleComponent type="1" schemaName="account" />
+    <AppModuleComponent type="1" schemaName="ovg_credencial" />
+    <AppModuleComponent type="26" id="{c3729a62-af52-f111-bec7-000d3a29c9a8}" />
+    <AppModuleComponent type="26" id="{8ebc6196-2457-4c24-b682-0d4bf88b6fd4}" />
+    <AppModuleComponent type="26" id="{7bbc8016-b0e6-42e5-9e32-76e81260b623}" />
+    <AppModuleComponent type="26" id="{080cbab8-abc8-f011-8544-7ced8d5c6d3c}" />
+    <AppModuleComponent type="60" id="{7ffe6e2c-a43c-4f07-8da6-2046af72e7f5}" />
+    <AppModuleComponent type="60" id="{c6cd4bbb-f814-4bbe-8f7c-a6c82d665a6a}" />
+    <AppModuleComponent type="62" schemaName="ovg_Gestiondecredenciales" />
+  </AppModuleComponents>
+  <AppModuleRoleMaps>
+    <Role id="{627090ff-40a3-4053-8790-584edc5be201}" />
+    <Role id="{33b26059-e603-f011-bae3-7c1e52765082}" />
+    <Role id="{43d67a38-219d-f011-bbd3-000d3abecdbd}" />
+    <Role id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+  </AppModuleRoleMaps>
+  <LocalizedNames>
+    <LocalizedName description="Gestión de credenciales" languagecode="3082" />
+  </LocalizedNames>
+  <appelements>
+    <appelement uniquename="ovg_ovg_Gestiondecredenciales_canvasappid_ovg_gestindecredencialvistaprivada_462b9">
+      <canvasappid>
+        <name>ovg_gestindecredencialvistaprivada_462b9</name>
+      </canvasappid>
+      <iscustomizable>1</iscustomizable>
+      <name>ovg_ovg_Gestiondecredenciales_canvasappid_ovg_gestindecredencialvistaprivada_462b9</name>
+    </appelement>
+    <appelement uniquename="ovg_ovg_Gestiondecredenciales_canvasappid_ovg_gestiondecredencialesdefaultcommandlibrary_0e569">
+      <canvasappid>
+        <name>ovg_gestiondecredencialesdefaultcommandlibrary_0e569</name>
+      </canvasappid>
+      <iscustomizable>1</iscustomizable>
+      <name>ovg_ovg_Gestiondecredenciales_canvasappid_ovg_gestiondecredencialesdefaultcommandlibrary_0e569</name>
+    </appelement>
+  </appelements>
+  <appsettings>
+    <appsetting settingdefinitionid.uniquename="AppChannel">
+      <iscustomizable>1</iscustomizable>
+      <value>1</value>
+    </appsetting>
+  </appsettings>
+</AppModule>

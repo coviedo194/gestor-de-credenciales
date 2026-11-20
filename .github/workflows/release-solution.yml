@@ -1,0 +1,66 @@
+# Publica la solución como Release de GitHub. Se lanza a mano desde la pestaña
+# Actions («Run workflow») o con: gh workflow run release-solution.yml
+# Empaqueta lo que ya está en solution/package/ en master (no se conecta a
+# Dataverse ni usa credenciales). La versión sale de
+# solution/package/Other/Solution.xml; si ya existe la release vX.X.X.X, no hace nada.
+name: Release de la solución
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-solution
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Leer la versión de la solución
+        id: version
+        shell: pwsh
+        run: |
+          [xml]$Xml = Get-Content -LiteralPath solution/package/Other/Solution.xml -Raw
+          $Version = $Xml.ImportExportXml.SolutionManifest.Version
+          if ($Version -notmatch '^\d+\.\d+\.\d+\.\d+$') { throw "Versión no válida: $Version" }
+          "value=$Version" >> $env:GITHUB_OUTPUT
+
+      - name: Comprobar si ya está publicada
+        id: existing
+        run: |
+          if gh release view "v${{ steps.version.outputs.value }}" > /dev/null 2>&1; then
+            echo "Ya existe la release v${{ steps.version.outputs.value }}; no se publica nada."
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Instalar Power Platform CLI
+        if: steps.existing.outputs.found == 'false'
+        run: |
+          dotnet tool install --global Microsoft.PowerApps.CLI.Tool
+          echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
+
+      - name: Empaquetar la solución
+        if: steps.existing.outputs.found == 'false'
+        run: >
+          pac solution pack
+          --zipfile "GestorDeCredenciales_${{ steps.version.outputs.value }}.zip"
+          --folder solution/package
+          --packagetype Unmanaged
+
+      - name: Publicar la release
+        if: steps.existing.outputs.found == 'false'
+        run: >
+          gh release create "v${{ steps.version.outputs.value }}"
+          "GestorDeCredenciales_${{ steps.version.outputs.value }}.zip"
+          --title "Gestor de credenciales ${{ steps.version.outputs.value }}"
+          --target "$GITHUB_SHA"
+          --generate-notes

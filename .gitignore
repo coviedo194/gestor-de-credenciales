@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Configuración local de herramientas (perfil PAC). Plantilla: .env.example
+.env
+
+# Scripts puntuales ligados al entorno de desarrollo; no se publican.
+local/
+
+# Paquete de la solución: se publica solo como GitHub Release.
+solution/*.zip
+solution/**/*.zip
+
+# Herramientas
+.playwright-mcp/
+__pycache__/
+*.pyc

@@ -1,0 +1,85 @@
+{
+  "properties": {
+    "connectionReferences": {},
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Introduzca su entrada",
+                  "title": "Credencial Guid",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_1": {
+                  "description": "Introduzca su entrada",
+                  "title": "Solicitante Email",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_3": {
+                  "description": "Introduzca su entrada",
+                  "title": "Solicitante Guid",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_3"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "7a5f9192-5bea-4051-a1bb-0cc42bd26830"
+          }
+        }
+      },
+      "actions": {
+        "Ejecutar_un_flujo_secundario": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "3ead3b78-489d-f011-bbd3-000d3abecdbd"
+            },
+            "body": {
+              "text": "@triggerBody()?['text']",
+              "text_1": "@triggerBody()?['text_1']",
+              "text_3": "@triggerBody()?['text_3']"
+            },
+            "retryPolicy": {
+              "type": "none"
+            }
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "f07e9d28-2f31-4a2e-9608-2edc72b7f4e6"
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

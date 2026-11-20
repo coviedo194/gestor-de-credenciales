@@ -1,0 +1,11 @@
+<dvtablesearch dvtablesearchid="39664f67-0eb5-f111-aaac-7c1e5272617c">
+  <appmoduleuniquename>ovg_Gestiondecredenciales</appmoduleuniquename>
+  <iscustomizable>1</iscustomizable>
+  <m365appmoduleid>
+    <uniquename>ovg_Gestiondecredenciales</uniquename>
+  </m365appmoduleid>
+  <name>M365_Primary_model_ovg_Gestiondecredenciales</name>
+  <searchtype>0</searchtype>
+  <statecode>1</statecode>
+  <statuscode>2</statuscode>
+</dvtablesearch>
