@@ -50,9 +50,9 @@ Admin **no** es un superusuario de secretos: tampoco lee contraseñas directamen
 
 Cada uno es un flujo padre (llamado desde la app) que delega en un flujo hijo con la conexión de Dataverse.
 
-## ⚠️ Antes de usarlo en producción
+## 🛡️ Autorización en los flujos
 
-Hoy la vista privada comprueba el permiso **en la app**, pero los flujos confían en el usuario que la app les indica y no lo vuelven a comprobar. Alguien con conocimientos técnicos podría llamar a los flujos directamente. Úsalo en entornos de prueba o con datos no críticos hasta que esté implementada la autorización en los flujos; ver [mejoras pendientes](./docs/alcance.md#6-limitaciones-y-mejoras-pendientes).
+Los flujos no confían en lo que envía la app: cada flujo padre identifica a quien llama con su cuenta de Microsoft Entra, comprueba que tiene un rol de la app y, para ver o cambiar la contraseña, que tiene permiso de edición sobre esa credencial. Si no, deniega la llamada sin tocar el secreto. Además, contraseña y nota privada quedan ocultas en el historial de ejecuciones de Power Automate. Detalle y limitaciones en [docs/alcance.md](./docs/alcance.md#7-autorización-en-servidor).
 
 ## 🚀 Cómo empezar
 
@@ -96,7 +96,6 @@ Hoy la vista privada comprueba el permiso **en la app**, pero los flujos confía
 
 ## 🔮 Próximos pasos
 
-- Autorización en los flujos (comprobar en el servidor quién llama y si tiene permiso).
 - Expiración y revocación de accesos concedidos.
 - Propuesta de versión 2 con Power Apps Code Apps.
 

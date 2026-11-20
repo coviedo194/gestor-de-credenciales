@@ -50,7 +50,7 @@ Se publican a mano: con la solución regenerada y en `master`, lanzar la Action 
 ## Líneas de trabajo
 
 - La migración a Power Apps Code Apps es una propuesta de versión 2: documentarla, no implementarla sin una petición posterior.
-- La autorización en servidor de los flujos (identidad, roles y acceso al registro) es una mejora pendiente, independiente de la migración a Code Apps.
+- Los flujos padre autorizan en el servidor (identidad por cabecera `x-ms-client-object-id`, rol de la app y acceso de escritura al registro); ver `docs/alcance.md` §7. Cualquier cambio en roles o en el alcance de Escribir sobre `ovg_credencial` obliga a revisar esa comprobación.
 
 ## Seguridad funcional
 

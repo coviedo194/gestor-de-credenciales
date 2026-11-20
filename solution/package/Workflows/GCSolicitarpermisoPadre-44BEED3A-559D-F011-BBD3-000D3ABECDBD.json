@@ -1,6 +1,16 @@
 {
   "properties": {
-    "connectionReferences": {},
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "ovg_GC_Dataverse"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
     "definition": {
       "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
       "contentVersion": "1.0.0.0",
@@ -57,24 +67,145 @@
         }
       },
       "actions": {
-        "Ejecutar_un_flujo_secundario": {
-          "type": "Workflow",
+        "IdLlamada": {
+          "type": "Compose",
+          "runAfter": {},
+          "inputs": "@toLower(coalesce(triggerOutputs()?['headers']?['x-ms-client-object-id'], ''))"
+        },
+        "ResolverUsuario": {
+          "type": "OpenApiConnection",
+          "runAfter": {
+            "IdLlamada": [
+              "Succeeded"
+            ]
+          },
           "inputs": {
+            "parameters": {
+              "entityName": "systemusers",
+              "$select": "systemuserid,internalemailaddress",
+              "$filter": "@concat('azureactivedirectoryobjectid eq ', if(empty(outputs('IdLlamada')), '00000000-0000-0000-0000-000000000000', outputs('IdLlamada')), ' and isdisabled eq false')",
+              "$top": 2
+            },
             "host": {
-              "workflowReferenceName": "3ead3b78-489d-f011-bbd3-000d3abecdbd"
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords"
+            }
+          }
+        },
+        "IdUsuario": {
+          "type": "Compose",
+          "runAfter": {
+            "ResolverUsuario": [
+              "Succeeded"
+            ]
+          },
+          "inputs": "@toLower(coalesce(first(body('ResolverUsuario')?['value'])?['systemuserid'], '00000000-0000-0000-0000-000000000000'))"
+        },
+        "RolDirecto": {
+          "type": "OpenApiConnection",
+          "runAfter": {
+            "IdUsuario": [
+              "Succeeded"
+            ]
+          },
+          "inputs": {
+            "parameters": {
+              "entityName": "roles",
+              "fetchXml": "@concat('<fetch top=\"1\"><entity name=\"role\"><attribute name=\"roleid\"/><filter type=\"or\"><condition attribute=\"parentrootroleid\" operator=\"eq\" value=\"33b26059-e603-f011-bae3-7c1e52765082\"/><condition attribute=\"parentrootroleid\" operator=\"eq\" value=\"43d67a38-219d-f011-bbd3-000d3abecdbd\"/></filter><link-entity name=\"systemuserroles\" from=\"roleid\" to=\"roleid\" intersect=\"true\"><filter><condition attribute=\"systemuserid\" operator=\"eq\" value=\"', outputs('IdUsuario'), '\"/></filter></link-entity></entity></fetch>')"
             },
-            "body": {
-              "text": "@triggerBody()?['text']",
-              "text_1": "@triggerBody()?['text_1']",
-              "text_3": "@triggerBody()?['text_3']"
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords"
+            }
+          }
+        },
+        "RolEquipo": {
+          "type": "OpenApiConnection",
+          "runAfter": {
+            "IdUsuario": [
+              "Succeeded"
+            ]
+          },
+          "inputs": {
+            "parameters": {
+              "entityName": "roles",
+              "fetchXml": "@concat('<fetch top=\"1\"><entity name=\"role\"><attribute name=\"roleid\"/><filter type=\"or\"><condition attribute=\"parentrootroleid\" operator=\"eq\" value=\"33b26059-e603-f011-bae3-7c1e52765082\"/><condition attribute=\"parentrootroleid\" operator=\"eq\" value=\"43d67a38-219d-f011-bbd3-000d3abecdbd\"/></filter><link-entity name=\"teamroles\" from=\"roleid\" to=\"roleid\" intersect=\"true\"><link-entity name=\"teammembership\" from=\"teamid\" to=\"teamid\" intersect=\"true\"><filter><condition attribute=\"systemuserid\" operator=\"eq\" value=\"', outputs('IdUsuario'), '\"/></filter></link-entity></link-entity></entity></fetch>')"
             },
-            "retryPolicy": {
-              "type": "none"
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords"
+            }
+          }
+        },
+        "Autorizado": {
+          "type": "If",
+          "runAfter": {
+            "RolDirecto": [
+              "Succeeded"
+            ],
+            "RolEquipo": [
+              "Succeeded"
+            ]
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@length(coalesce(body('ResolverUsuario')?['value'], json('[]')))",
+                  1
+                ]
+              },
+              {
+                "greater": [
+                  "@add(length(coalesce(body('RolDirecto')?['value'], json('[]'))), length(coalesce(body('RolEquipo')?['value'], json('[]'))))",
+                  0
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Ejecutar_un_flujo_secundario": {
+              "type": "Workflow",
+              "runAfter": {},
+              "runtimeConfiguration": {
+                "secureData": {
+                  "properties": [
+                    "inputs",
+                    "outputs"
+                  ]
+                }
+              },
+              "inputs": {
+                "host": {
+                  "workflowReferenceName": "3ead3b78-489d-f011-bbd3-000d3abecdbd"
+                },
+                "body": {
+                  "text": "@triggerBody()?['text']",
+                  "text_1": "@coalesce(first(body('ResolverUsuario')?['value'])?['internalemailaddress'], '')",
+                  "text_3": "@outputs('IdUsuario')"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              }
             }
           },
-          "runAfter": {},
-          "metadata": {
-            "operationMetadataId": "f07e9d28-2f31-4a2e-9608-2edc72b7f4e6"
+          "else": {
+            "actions": {
+              "Denegar": {
+                "type": "Terminate",
+                "inputs": {
+                  "runStatus": "Failed",
+                  "runError": {
+                    "code": "GC_NO_AUTORIZADO",
+                    "message": "No tienes permiso para esta operación."
+                  }
+                }
+              }
+            }
           }
         }
       }

@@ -71,6 +71,14 @@
           },
           "metadata": {
             "operationMetadataId": "d23f1bdc-63ab-4d22-804e-0683a26c8e1f"
+          },
+          "runtimeConfiguration": {
+            "secureData": {
+              "properties": [
+                "inputs",
+                "outputs"
+              ]
+            }
           }
         }
       },
@@ -90,7 +98,15 @@
               "connectionName": "shared_commondataserviceforapps"
             }
           },
-          "runAfter": {}
+          "runAfter": {},
+          "runtimeConfiguration": {
+            "secureData": {
+              "properties": [
+                "inputs",
+                "outputs"
+              ]
+            }
+          }
         },
         "Responder_a_un_flujo_de_aplicación_Power_App": {
           "type": "Response",
@@ -107,6 +123,13 @@
             "Actualizar_una_fila": [
               "Succeeded"
             ]
+          },
+          "runtimeConfiguration": {
+            "secureData": {
+              "properties": [
+                "inputs"
+              ]
+            }
           }
         },
         "Audit": {

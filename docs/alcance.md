@@ -23,9 +23,9 @@ Este documento describe el funcionamiento y la configuración de la solución, n
 5. El historial personalizado registra consultas y actualizaciones, sin incluir valores secretos. Ambos roles leen todo el historial a nivel organización y el formulario de credencial lo muestra en una subcuadrícula.
 6. El rol Usuarios no permite crear credenciales.
 7. Ambos roles pueden leer y anexar a cuentas globalmente; Admin puede además crear y escribir cuentas con profundidad Basic. Ninguno concede borrado ni reasignación de cuentas.
-8. La aplicación incluye formulario, vista y navegación de cuentas. La autorización en servidor de los flujos es una mejora futura pendiente; Code Apps es una propuesta de V2.
+8. La aplicación incluye formulario, vista y navegación de cuentas. Los flujos padre autorizan cada llamada en el servidor (sección 7); Code Apps es una propuesta de V2.
 
-La conexión privilegiada no representa una suplantación real del usuario que inició la aplicación. La página envía un GUID de usuario como parámetro y el flujo lo utiliza para registrar o compartir la fila. Un GUID recibido del cliente no prueba por sí mismo la identidad autenticada ni su autorización.
+La conexión privilegiada no representa una suplantación real del usuario que inició la aplicación. Por eso los flujos padre no usan el GUID ni el email que envía la página: identifican a quien llama a partir de la identidad autenticada que Power Platform añade a la llamada y solo pasan a los flujos hijos el usuario verificado.
 
 ### 2.2 Estado observable en la exportación
 
@@ -75,11 +75,11 @@ La vista privada abre desde el registro en contexto mediante la acción JavaScri
 
 ### 3.2 Flujos y conexiones
 
-- Los tres flujos padre de Power Apps V2 reenvían parámetros a sus flujos hijos. No contienen validación de rol, autorización de fila ni comprobación de identidad del solicitante.
+- Los tres flujos padre de Power Apps V2 comprueban identidad, rol y, en obtención y actualización, el acceso de escritura a la credencial antes de invocar a sus flujos hijos (sección 7). Usan la referencia `ovg_GC_Dataverse` para esas consultas.
 - Los hijos emplean la referencia `ovg_GC_Dataverse`; el hijo de solicitud también utiliza una conexión de Approvals (`ovg_sharedapprovals_2c685`). Que una referencia figure en la solución no confirma quién es su propietario, credenciales, uso compartido o permisos efectivos.
 - El hijo de obtención ejecuta `GetItem` seleccionando contraseña y nota privada, devuelve esos valores y ejecuta una rama de auditoría. La rama de auditoría tiene `runAfter: {}`; la respuesta no espera a que termine y puede registrarse aunque falle la operación principal.
 - El hijo de actualización escribe los campos secretos mediante `UpdateOnlyRecord`, responde a la app y ejecuta su rama de auditoría de forma paralela, sin que la respuesta espere esa auditoría.
-- En el JSON exportado no se observan opciones `secureData` para ocultar entradas/salidas. **Pendiente:** evaluar exposición de parámetros y salidas en el historial de ejecución, sin utilizar secretos reales.
+- Las entradas y salidas que transportan secretos están ocultas en el historial de ejecución (`secureData`): disparadores de obtención y actualización (padre e hijo), `GetCredencial`, `Actualizar_una_fila`, las respuestas a la app y las llamadas a los hijos. Las acciones de auditoría y el flujo de solicitud no transportan secretos y se mantienen visibles.
 - La auditoría personalizada observada se limita a obtención y actualización. No se registra explícitamente solicitud, resultado de aprobación ni concesión de acceso. Los mensajes de auditoría revisados no contienen los campos secretos.
 - El flujo de solicitud obtiene la credencial, expande `owninguser` y `ovg_cliente`, y dirige la aprobación estándar al email del propietario usuario. Si se aprueba, ejecuta `GrantAccess` con `ReadAccess` y `WriteAccess` para el `systemuserid` recibido. Si se rechaza, no concede acceso. La respuesta del hijo se emite tras la aprobación o rechazo; el padre no tiene acción `Response` y espera al flujo hijo, por lo que hay un riesgo de demora o timeout de UX, no un fallo probado.
 - La ruta observada presupone propietario usuario (`owninguser`); la aprobación para filas propiedad de equipo no está claramente soportada.
@@ -208,28 +208,35 @@ Un frontend Code App no resuelve la autorización por sí mismo. La arquitectura
 ### Mejoras funcionales y técnicas
 
 1. Mantener visible la confirmación de solicitud y añadir estado/manejo claro de error.
-2. Incorporar autorización en servidor: los flujos reciben IDs de credencial y usuario desde el cliente y no validan identidad/permiso antes de leer, actualizar o compartir.
-3. Revisar la protección de entradas y salidas del historial de ejecución para acciones que transportan secretos.
-4. Definir auditoría de solicitudes, decisiones y concesiones; encadenar operación, auditoría y respuesta para no registrar éxito de una operación fallida ni responder antes de asegurar el registro.
-5. Diseñar expiración/revocación y comprobar soporte a filas propiedad de equipo.
+2. Definir auditoría de solicitudes, decisiones y concesiones; encadenar operación, auditoría y respuesta para no registrar éxito de una operación fallida ni responder antes de asegurar el registro.
+3. Diseñar expiración/revocación y comprobar soporte a filas propiedad de equipo en el flujo de solicitud.
+4. Devolver a la app un resultado de denegación explícito en lugar de un error genérico.
 
 ### Decisiones/verificaciones pendientes
 
 - Probar la MDA con roles limitados; la configuración de formulario, vista, referencia de tabla y navegación está verificada mediante API.
-- Confirmar la identidad y los privilegios efectivos de ejecución de cada flujo; no confiar en el GUID de usuario enviado por la aplicación como validación de identidad.
+- Probar la autorización de los flujos con usuarios reales del rol Usuarios, con credenciales compartidas y con equipos propietarios.
 - Confirmar quién puede enlazar cuentas y leer/escribir/compartir cada credencial.
 - Probar con roles limitados la subcuadrícula `Logs` y la apertura de sus registros, ya que `ovg_logdecredencial` no es componente de la aplicación basada en modelo.
 - Verificar uso compartido de flujos, DLP y auditoría; las referencias de conexión están activas y la configuración de seguridad de campo se describe en la sección de modelo de datos.
 - Confirmar la ruta de apertura de la página privada y si la biblioteca de comandos participa realmente en el comando de aplicación.
 - Probar UX y manejo de errores con datos ficticios en un entorno controlado antes de publicar.
 
-## 7. Autorización en servidor: alcance de la mejora futura
+## 7. Autorización en servidor
 
-**No se ha implantado autorización en servidor.** Para una mejora posterior,
-antes de consultar, actualizar o compartir, resolver la identidad autenticada
-real, comprobar el rol funcional (también heredado mediante equipos) y verificar
-los permisos efectivos sobre la credencial. No confiar en el GUID/email enviado
-por Canvas ni considerar suficiente la comprobación de rol por sí sola.
-Añadir pruebas negativas y positivas antes de publicar, y proteger entradas,
-salidas e historial de auditoría sin registrar secretos. Esta mejora no exige
-migrar primero a Code Apps.
+Cada flujo padre autoriza la llamada antes de invocar a su flujo hijo:
+
+1. **Identidad:** toma el ID de Microsoft Entra de la cabecera `x-ms-client-object-id` del disparador, que Power Platform rellena a partir del token de quien ejecuta la app, y busca el usuario activo con ese `azureactivedirectoryobjectid`. Los parámetros `Solicitante Guid` y `Solicitante Email` que envía la página se ignoran.
+2. **Rol:** exige `Gestión de credenciales - Usuarios` o `Gestión de credenciales - Admin` (cualquier copia por unidad de negocio, por `parentrootroleid`), asignado directamente o mediante un equipo.
+3. **Registro (obtención y actualización):** exige acceso de escritura a la credencial. Como ambos roles conceden Escribir con alcance Usuario, ese acceso existe si la persona es propietaria, pertenece al equipo propietario o tiene la fila compartida con escritura, directamente o mediante un equipo (`principalobjectaccess`, derechos directos o heredados). La credencial se lee primero por ID, de modo que un ID no válido detiene el flujo.
+4. **Solicitud de permiso:** solo exige identidad y rol, porque la usa quien todavía no tiene acceso. El hijo recibe el email y el `systemuserid` verificados.
+
+Si alguna comprobación falla, el flujo termina con el error `GC_NO_AUTORIZADO`, no invoca al hijo y la app muestra un error.
+
+**Comprobado en el entorno de desarrollo:** usuario sin rol de la app (denegado), usuario con rol sobre una credencial propia (lectura y actualización correctas, con el secreto oculto en el historial) y usuario con rol sobre una credencial ajena no compartida (denegado).
+
+**Limitaciones:**
+
+- Un administrador del sistema sin rol de la app queda denegado, y con rol solo accede a las credenciales propias o compartidas: el control no aplica los privilegios de otros roles.
+- El cálculo de escritura presupone el alcance Usuario de ambos roles. Si se amplía ese alcance o se activa la seguridad jerárquica, hay que revisar la comprobación.
+- La página sigue enviando los parámetros de solicitante por compatibilidad, aunque los flujos no los usen.

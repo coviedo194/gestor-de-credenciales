@@ -25,6 +25,6 @@
   <IntroducedVersion>1.0</IntroducedVersion>
   <CdsDependencies>{"cdsdependencies":[{"componenttype":1,"logicalname":"ovg_credencial"}]}</CdsDependencies>
   <IsCustomizable>1</IsCustomizable>
-  <BackgroundImageUri>/CanvasApps/ovg_gestiondecredencialesdefaultcommandlibrar30049_BackgroundImageUri</BackgroundImageUri>
-  <DocumentUri>/CanvasApps/ovg_gestiondecredencialesdefaultcommandlibrar53175_DocumentUri.msapp</DocumentUri>
+  <BackgroundImageUri>/CanvasApps/ovg_gestiondecredencialesdefaultcommandlibrar88095_BackgroundImageUri</BackgroundImageUri>
+  <DocumentUri>/CanvasApps/ovg_gestiondecredencialesdefaultcommandlibrar71700_DocumentUri.msapp</DocumentUri>
 </CanvasApp>

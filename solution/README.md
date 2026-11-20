@@ -49,7 +49,7 @@ Asígnalos desde [admin.powerplatform.microsoft.com](https://admin.powerplatform
 
 Abre la app **Gestión de credenciales**. Desde una credencial, el comando **Vista Privada** abre la custom page que muestra o solicita el acceso al secreto.
 
-> ⚠️ Los flujos aún no comprueban en el servidor quién los llama. Revisa [las limitaciones](../docs/alcance.md#6-limitaciones-y-mejoras-pendientes) antes de guardar credenciales reales.
+> 🛡️ Los flujos padre comprueban en el servidor quién los llama, su rol y su permiso sobre la credencial. Quien vaya a usar la app necesita el rol Usuarios o Admin, también los administradores del sistema. Revisa [las limitaciones](../docs/alcance.md#7-autorización-en-servidor) antes de guardar credenciales reales.
 
 ---
 
